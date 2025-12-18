@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran TK Ceria</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe3f1;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #ff5fa2;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #ff7bbd;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .bukti {
+            border: 1px solid #ff5fa2;
+            padding: 15px;
+            background-color: #fff0f8;
+        }
+
+        .password-box {
+            display: flex;
+            gap: 5px;
+        }
+
+        .password-box button {
+            width: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGIN ADMIN -->
+    <div id="loginDiv">
+        <h2>Login Admin</h2>
+        <input type="text" id="username" placeholder="Username">
+
+        <div class="password-box">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="togglePassword()">👁</button>
+        </div>
+
+        <button onclick="loginAdmin()">Masuk</button>
+    </div>
+
+    <!-- FORM PENDAFTARAN -->
+    <div id="formDiv" class="hidden">
+        <h2>Pendaftaran TK Ceria</h2>
+
+        <h3>Data Siswa</h3>
+        <input id="namaSiswa" placeholder="Nama Siswa">
+        <input id="umurSiswa" type="number" placeholder="Umur">
+        <input id="tempatSiswa" placeholder="Tempat Lahir">
+        <input id="tglSiswa" type="date">
+        <input id="alamatSiswa" placeholder="Alamat">
+        <select id="jkSiswa">
+            <option value="">Jenis Kelamin</option>
+            <option>Laki-laki</option>
+            <option>Perempuan</option>
+        </select>
+        <input id="namaAyahSiswa" placeholder="Nama Ayah">
+        <input id="namaIbuSiswa" placeholder="Nama Ibu">
+
+        <h3>Data Ayah</h3>
+        <input id="namaAyah" placeholder="Nama Ayah">
+        <input id="tempatAyah" placeholder="Tempat Lahir">
+        <input id="tglAyah" type="date">
+        <input id="alamatAyah" placeholder="Alamat">
+        <input id="pekerjaanAyah" placeholder="Pekerjaan">
+
+        <h3>Data Ibu</h3>
+        <input id="namaIbu" placeholder="Nama Ibu">
+        <input id="tempatIbu" placeholder="Tempat Lahir">
+        <input id="tglIbu" type="date">
+        <input id="alamatIbu" placeholder="Alamat">
+        <input id="pekerjaanIbu" placeholder="Pekerjaan">
+
+        <h3>Upload Berkas Kartu Keluarga dan Akta Kelahiran</h3>
+        <input type="file" id="kkFile">
+        <input type="file" id="akteFile">
+
+        <button onclick="simpanPendaftaran()">Simpan Pendaftaran</button>
+    </div>
+
+    <!-- BUKTI PENDAFTARAN -->
+    <div id="buktiDiv" class="hidden">
+        <h2>Bukti Pendaftaran</h2>
+        <div id="buktiData" class="bukti"></div>
+        <button onclick="window.print()">Cetak Bukti</button>
+    </div>
+
+</div>
+
+<script>
+    // menampilkan dan menyembunyikan password
+    function togglePassword() {
+        var pass = document.getElementById("password");
+        pass.type = pass.type === "password" ? "text" : "password";
+    }
+
+    // proses login sederhana
+    function loginAdmin() {
+        if (username.value === "" || password.value === "") {
+            alert("Username dan password harus diisi");
+            return;
+        }
+
+        loginDiv.classList.add("hidden");
+        formDiv.classList.remove("hidden");
+    }
+
+    // menyimpan data dan menampilkan bukti pendaftaran
+    function simpanPendaftaran() {
+        if (namaSiswa.value === "" || umurSiswa.value === "") {
+            alert("Data siswa belum lengkap");
+            return;
+        }
+
+        var kk = kkFile.files[0] ? kkFile.files[0].name : "-";
+        var akte = akteFile.files[0] ? akteFile.files[0].name : "-";
+
+        buktiData.innerHTML =
+            "<b>Status:</b> Pendaftaran Berhasil<br><br>" +
+            "<b>DATA SISWA</b><br>" +
+            "Nama: " + namaSiswa.value + "<br>" +
+            "Umur: " + umurSiswa.value + "<br>" +
+            "Tempat Lahir: " + tempatSiswa.value + "<br>" +
+            "Tanggal Lahir: " + tglSiswa.value + "<br><br>" +
+
+            "<b>DATA AYAH</b><br>" +
+            "Nama: " + namaAyah.value + "<br>" +
+            "Pekerjaan: " + pekerjaanAyah.value + "<br><br>" +
+
+            "<b>DATA IBU</b><br>" +
+            "Nama: " + namaIbu.value + "<br>" +
+            "Pekerjaan: " + pekerjaanIbu.value + "<br><br>" +
+
+            "<b>BERKAS</b><br>" +
+            "KK: " + kk + "<br>" +
+            "Akte: " + akte;
+
+        formDiv.classList.add("hidden");
+        buktiDiv.classList.remove("hidden");
+    }
+</script>
+
+</body>
+</html>
